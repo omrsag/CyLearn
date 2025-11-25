@@ -1,63 +1,71 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ cartCount }) => {
+  const linkClass = (isActive) =>
+    'nav-link' + (isActive ? ' active fw-semibold text-danger' : '');
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark navbar-cylearn no-padding-nav fixed-top">
-      <div className="container-fluid px-3">
-        <Link className="navbar-brand d-flex align-items-center" to="/">
-          <span className="me-1 fw-bold text-danger">Cy</span>
-          <span className="navbar-brand-text">Learn</span>
-        </Link>
+    <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+      <div className="container">
+        <NavLink className="navbar-brand fw-bold text-danger" to="/">
+          YallaFood
+        </NavLink>
 
         <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#mainNavbar"
-          aria-controls="mainNavbar"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          data-bs-target="#navMenu"
         >
-          <span className="navbar-toggler-icon" />
+          <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="mainNavbar">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+        <div className="collapse navbar-collapse" id="navMenu">
+          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <NavLink end to="/" className="nav-link">
-                Home
+              <NavLink
+                to="/restaurants"
+                className={({ isActive }) => linkClass(isActive)}
+              >
+                Restaurants
               </NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/about" className="nav-link">
-                About
+              <NavLink
+                to="/meals"
+                className={({ isActive }) => linkClass(isActive)}
+              >
+                Popular Meals
               </NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/courses" className="nav-link">
-                Courses
+              <NavLink
+                to="/orders"
+                className={({ isActive }) => linkClass(isActive)}
+              >
+                My Orders
+                {cartCount > 0 && (
+                  <span className="badge bg-danger ms-2">{cartCount}</span>
+                )}
               </NavLink>
             </li>
 
             <li className="nav-item">
-              <NavLink to="/contact" className="nav-link">
+              <NavLink
+                to="/contact"
+                className={({ isActive }) => linkClass(isActive)}
+              >
                 Contact
               </NavLink>
             </li>
-
-            <li className="nav-item">
-              <NavLink to="/login" className="nav-link">
-                Login
-              </NavLink>
-            </li>
-
-            <Link to="/courses" className="btn btn-sm btn-outline-info ms-lg-3">
-              Start Learning
-            </Link>
           </ul>
+
+          <button className="btn btn-danger ms-lg-3 mt-2 mt-lg-0">
+            Sign In
+          </button>
         </div>
       </div>
     </nav>

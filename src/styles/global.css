@@ -1,25 +1,55 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  background-color: #f8f9fa;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
-  background-color: #0a1a2f;
-  color: #e5e7eb;
 }
 
-a {
-  text-decoration: none;
+.hero-section {
+  background: linear-gradient(135deg, #ff7b54, #ffb26b);
+  color: #fff;
+  padding: 80px 0;
 }
 
-.app-root {
-  background-color: #0a1a2f;
+.hero-title {
+  font-weight: 700;
+  font-size: 3rem;
 }
 
-main {
-  padding-top: 4rem;
-  padding-bottom: 2rem;
+.brand-badge {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.restaurant-card img {
+  height: 160px;
+  object-fit: cover;
+}
+
+.meal-card img {
+  height: 140px;
+  object-fit: cover;
+}
+
+.section-title {
+  font-weight: 700;
+}
+
+.footer-custom {
+  background-color: #111827;
+  color: #ffffff;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.app-container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1;
 }
