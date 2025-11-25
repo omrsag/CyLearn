@@ -1,19 +1,14 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
-  const year = new Date().getFullYear();
-
   return (
-    <footer className="py-4 mt-4 footer-custom">
-      <div className="container text-center">
-        <p className="mb-1">&copy; {year} YallaFood. All rights reserved.</p>
-        <p className="small mb-0">
-          Built by <strong>Othman Saghir</strong> &amp;{' '}
-          <strong>Zein Nouf</strong>.
-        </p>
+    <footer className="footer-cylearn py-3 mt-4">
+      <div className="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <span>© {new Date().getFullYear()} CyLearn. All rights reserved.</span>
+        <span className="text-muted">Secure Your Knowledge.</span>
       </div>
     </footer>
   );
-};
+}
 
 export default Footer;

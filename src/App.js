@@ -1,48 +1,36 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import RestaurantMenuPage from './pages/RestaurantMenuPage';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-import HomePage from './pages/HomePage';
-import RestaurantsPage from './pages/RestaurantsPage';
-import MealsPage from './pages/MealsPage';
-import OrdersPage from './pages/OrdersPage';
-import ContactPage from './pages/ContactPage';
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Courses from "./pages/Courses";
+import Contact from "./pages/Contact";
+import CourseDetails from "./pages/CourseDetails";
+import Login from "./pages/Login";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/global.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/global.css";
+import "./styles/theme.css";
 
 const App = () => {
-  const [cartItems, setCartItems] = useState([]);
-
-  const handleAddToCart = (meal) => {
-    setCartItems(prev => [...prev, meal]);
-  };
-
-  const handleClearCart = () => {
-    setCartItems([]);
-  };
-
   return (
     <Router>
-      <div className="app-container">
-        <Navbar cartCount={cartItems.length} />
+      <div className="app-root d-flex flex-column min-vh-100">
+        <Navbar />
 
-        <div className="app-content">
+        <main className="flex-grow-1">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/restaurants" element={<RestaurantsPage />} />
-            <Route path="/meals" element={<MealsPage onAddToCart={handleAddToCart} />} />
-            <Route path="/orders" element={<OrdersPage cartItems={cartItems} onClearCart={handleClearCart} />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route
-              path="/restaurants/:id"
-              element={<RestaurantMenuPage onAddToCart={handleAddToCart} />}
-            />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/course/:id" element={<CourseDetails />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
-        </div>
+        </main>
 
         <Footer />
       </div>
@@ -51,3 +39,4 @@ const App = () => {
 };
 
 export default App;
+

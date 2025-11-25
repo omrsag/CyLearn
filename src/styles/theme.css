@@ -1,0 +1,130 @@
+:root {
+  --blue-team: #0a1a2f;
+  --red-team: #8b0000;
+  --text-light: #e5e7eb;
+  --text-muted: #9ca3af;
+  --card-bg: #111827;
+  --accent-blue: #00c7ff;
+}
+
+.navbar-cylearn {
+  background-color: rgba(10, 26, 47, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1f2937;
+}
+
+.navbar-brand-text {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.hero-section {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  background: radial-gradient(circle at top, #1f2937 0, #0a1a2f 45%, #020617 100%);
+}
+
+.hero-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+}
+
+.hero-subtitle {
+  color: var(--text-muted);
+  max-width: 600px;
+}
+
+.hero-badge {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+.tag-red {
+  color: #fecaca;
+  background-color: rgba(139, 0, 0, 0.25);
+  border: 1px solid #8b0000;
+}
+
+.tag-blue {
+  color: #bfdbfe;
+  background-color: rgba(37, 99, 235, 0.2);
+  border: 1px solid #1d4ed8;
+}
+
+.cy-card {
+  background-color: var(--card-bg);
+  border-radius: 0.75rem;
+  border: 1px solid #1f2937;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.cy-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-blue);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+}
+
+.footer-cylearn {
+  border-top: 1px solid #1f2937;
+  background-color: #020617;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.text-muted {
+  color: #64748b !important;
+}
+
+.form-control {
+  background-color: #111827 !important;
+  border: 1px solid #1f2937 !important;
+  color: #e5e7eb !important;
+  border-radius: 8px;
+}
+
+.form-control::placeholder {
+  color: #9ca3af !important;
+  opacity: 1;
+}
+
+.form-label {
+  color: #e5e7eb !important;
+}
+
+.form-control:focus {
+  background-color: #111827 !important;
+  border-color: #00C7FF !important;
+  box-shadow: 0 0 0 2px rgba(0, 199, 255, 0.25) !important;
+  color: #fff !important;
+}
+
+.lesson-list {
+  border: none !important;
+  padding: 0;
+  margin: 0;
+}
+
+.lesson-item {
+  background-color: transparent !important;
+  color: #cbd5e1 !important;
+  padding: 12px 14px;
+  cursor: pointer;
+  border: none !important;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+
+.lesson-item:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: white !important;
+}
+
+.lesson-item.active {
+  background-color: rgba(0, 199, 255, 0.18) !important;
+  color: #e5f4ff !important;
+  font-weight: 500;
+}
