@@ -1,8 +1,16 @@
-import React from "react";
-import { courses } from "../data/coursesData";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import CourseCard from "../components/CourseCard";
 
 const Courses = () => {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/courses")
+      .then((res) => setCourses(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="container py-5">
       <h1 className="mb-4">Courses</h1>

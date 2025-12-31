@@ -1,7 +1,15 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    navigate("/");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark navbar-cylearn no-padding-nav fixed-top">
       <div className="container-fluid px-3">
@@ -48,11 +56,24 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            <li className="nav-item">
-              <NavLink to="/login" className="nav-link">
-                Login
-              </NavLink>
-            </li>
+            {/* ===== Login / Logout ===== */}
+            {!userId ? (
+              <li className="nav-item">
+                <NavLink to="/login" className="nav-link">
+                  Login
+                </NavLink>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <span
+                  className="nav-link"
+                  style={{ cursor: "pointer" }}
+                  onClick={handleLogout}
+                >
+                  Logout
+                </span>
+              </li>
+            )}
 
             <Link to="/courses" className="btn btn-sm btn-outline-info ms-lg-3">
               Start Learning

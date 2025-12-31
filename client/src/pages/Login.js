@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
   const [mode, setMode] = useState("login");
@@ -7,25 +8,37 @@ const Login = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
 
-  const demoEmail = "student@cylearn.com";
-  const demoPassword = "123456";
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (mode === "login") {
-      if (email === demoEmail && password === demoPassword) {
-        setMessage("Login successful.");
-      } else {
-        setMessage("Incorrect email or password.");
+      try {
+        const res = await axios.post("http://localhost:8080/login", {
+          email,
+          password,
+        });
+
+        if (res.data.success && res.data.user) {
+          localStorage.setItem("userId", res.data.user.id);
+        }
+
+        setMessage(res.data.message);
+      } catch (e) {
+        setMessage("Server error.");
       }
     }
 
     if (mode === "signup") {
-      if (name.trim() === "" || email.trim() === "" || password.trim() === "") {
-        setMessage("Please fill all fields.");
-      } else {
-        setMessage("Account created successfully.");
+      try {
+        const res = await axios.post("http://localhost:8080/signup", {
+          name,
+          email,
+          password,
+        });
+
+        setMessage(res.data.message);
+      } catch (e) {
+        setMessage("Server error.");
       }
     }
   };
@@ -42,7 +55,6 @@ const Login = () => {
       <div className="row">
         <div className="col-lg-5">
           <form className="cy-card p-4" onSubmit={handleSubmit}>
-            
             {mode === "signup" && (
               <div className="mb-3">
                 <label className="form-label">Full Name</label>
@@ -82,9 +94,7 @@ const Login = () => {
               {mode === "login" ? "Login" : "Sign Up"}
             </button>
 
-            {message && (
-              <p className="text-muted small mt-2 mb-0">{message}</p>
-            )}
+            {message && <p className="text-muted small mt-2 mb-0">{message}</p>}
 
             <div className="text-center mt-3">
               {mode === "login" ? (
@@ -117,7 +127,6 @@ const Login = () => {
                 </p>
               )}
             </div>
-
           </form>
         </div>
       </div>

@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { courses } from "../data/coursesData";
+import axios from "axios";
 
 const Home = () => {
-  const featuredCourses = courses.slice(0, 3);
+  const [featuredCourses, setFeaturedCourses] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/courses")
+      .then((res) => {
+        setFeaturedCourses(res.data.slice(0, 3));
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="home-page">
@@ -18,9 +27,7 @@ const Home = () => {
               <h1 className="hero-title mb-3">
                 Secure Your Knowledge with{" "}
                 <span style={{ color: "#8B0000" }}>Cy</span>
-                <span>
-                  Learn
-                </span>
+                <span>Learn</span>
               </h1>
 
               <p className="hero-subtitle mb-4">
@@ -107,6 +114,7 @@ const Home = () => {
               </div>
             ))}
           </div>
+
         </div>
       </section>
     </div>

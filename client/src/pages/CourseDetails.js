@@ -1,16 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { courses } from "../data/coursesData";
+import axios from "axios";
 
 const CourseDetails = () => {
   const { id } = useParams();
-  const course = courses.find((c) => c.id === id);
 
-  const [selectedLessonId, setSelectedLessonId] = useState(
-    course && course.lessons && course.lessons.length > 0
-      ? course.lessons[0].id
-      : null
-  );
+  const [course, setCourse] = useState(null);
+  const [selectedLessonId, setSelectedLessonId] = useState(null);
+  const [completedLessons, setCompletedLessons] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/courses/" + id)
+      .then((res) => {
+        setCourse(res.data);
+
+        if (res.data.lessons && res.data.lessons.length > 0) {
+          setSelectedLessonId(res.data.lessons[0].id);
+        }
+
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+          axios
+            .get("http://localhost:8080/progress/" + userId)
+            .then((r) => setCompletedLessons(r.data.map((x) => x.lesson_id)))
+            .catch((err) => console.log(err));
+        }
+      })
+      .catch(() => setCourse(null));
+  }, [id]);
 
   if (!course) {
     return (
@@ -65,6 +83,7 @@ const CourseDetails = () => {
         <div className="col-lg-4">
           <div className="cy-card p-3 h-100">
             <h5 className="mb-3">Course Content</h5>
+
             {course.lessons && course.lessons.length > 0 ? (
               <ul className="list-group list-group-flush lesson-list">
                 {course.lessons.map((lesson) => (
@@ -76,7 +95,12 @@ const CourseDetails = () => {
                     }
                     onClick={() => setSelectedLessonId(lesson.id)}
                   >
-                    {lesson.title}
+                    <div className="d-flex justify-content-between align-items-center">
+                      <span>{lesson.title}</span>
+                      {completedLessons.includes(lesson.id) && (
+                        <span className="badge bg-success">Done</span>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -93,6 +117,39 @@ const CourseDetails = () => {
             <h5 className="mb-3">
               {selectedLesson ? selectedLesson.title : "Lesson Preview"}
             </h5>
+
+            {selectedLesson && (
+              <button
+                className="btn btn-sm btn-outline-info mb-3"
+                onClick={async () => {
+                  const userId = localStorage.getItem("userId");
+                  if (!userId) {
+                    alert("Please login first.");
+                    return;
+                  }
+
+                  try {
+                    await axios.post("http://localhost:8080/progress", {
+                      userId,
+                      lessonId: selectedLesson.id,
+                      courseId: course.id,
+                    });
+
+                    setCompletedLessons((prev) =>
+                      prev.includes(selectedLesson.id)
+                        ? prev
+                        : [...prev, selectedLesson.id]
+                    );
+                  } catch (err) {
+                    console.log(err);
+                  }
+                }}
+              >
+                {completedLessons.includes(selectedLesson.id)
+                  ? "Completed ✅"
+                  : "Mark as Completed"}
+              </button>
+            )}
 
             {selectedLesson ? (
               <div className="ratio ratio-16x9 flex-grow-1">
